@@ -6,13 +6,13 @@
 
 
 
-import storeGalleta from "../context/storeGalleta"
+import storeVolumen from "../context/storeVolumen"
 import Octavo from "./Octavo"
 
 
 const Septimo = () => {
 
-  const {detalle,setGalleta} = storeGalleta()
+  const { volumen, subirVolumen, bajarVolumen, resetVolumen } = storeVolumen()
 
   return (
     <>
@@ -24,6 +24,9 @@ const Septimo = () => {
         <li>
           Librería para manejar el estado global. Además, funciona como un store que cualquier componente puede usar.
         </li>
+        <li>
+          En este ejemplo, el volumen de la música se comparte entre el componente padre y el hijo.
+        </li>
       </ul>
 
 
@@ -33,11 +36,17 @@ const Septimo = () => {
 
         <Octavo/>
         
-        <p>nombre: {detalle.nombre}</p>
-        
-        <p>tipo: {detalle.tipo}</p>
+        <p className="text-center">Volumen actual: {volumen}%</p>
 
-        <button className="bg-gray-600 text-white py-1 px-3 rounded w-full mt-4" onClick={()=>{setGalleta({nombre: "BIMBO", tipo: "Ponkey"})}}>Cambiar</button>
+        <div className="flex justify-center gap-2 mt-4">
+
+          <button className="bg-gray-600 text-white py-1 px-3 rounded" onClick={bajarVolumen}>Bajar</button>
+
+          <button className="bg-gray-600 text-white py-1 px-3 rounded" onClick={subirVolumen}>Subir</button>
+
+          <button className="bg-gray-600 text-white py-1 px-3 rounded" onClick={resetVolumen}>Resetear</button>
+
+        </div>
 
         
       </div>

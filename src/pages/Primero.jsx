@@ -11,9 +11,15 @@
 
 const Primero = () => {
 
-  const user = {
-    name: "José",
-    rol: "Invitado",
+  const movie = {
+    name: "El origen de los guardianes",
+    year: 2012,
+    detalles: {
+      director: "Peter Ramsey",
+      estudio: "DreamWorks Animation",
+      estreno: "2012 (en cines el 21 de noviembre)",
+      duración: "98 minutos"
+    }
   }
 
   return (
@@ -47,11 +53,11 @@ const Primero = () => {
         
         <div className="w-120 border rounded-lg p-4 w-80 text-center">
           
-          <h2 className="text-lg font-semibold mb-2">Bienvenido(a) - {user.name}</h2>
+          <h2 className="text-lg font-semibold mb-2">Bienvenido(a) - {movie.name}</h2>
           
-          <p className="mb-3">{user.rol === "Admin" ? "Administrador" :"Invitado"}</p>
+          <p className="mb-3">{movie.year}</p>
           
-          <button className="bg-red-700 text-white py-1 px-3 rounded w-full" onClick={()=>{alert("cierre de sesion")}}>Salir</button>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded-full w-full" onClick={()=>{alert(`${movie.detalles.director}, ${movie.detalles.estudio}, ${movie.detalles.estreno}, ${movie.detalles.duración}` )}}>Detalles</button>
         
         </div>
       
