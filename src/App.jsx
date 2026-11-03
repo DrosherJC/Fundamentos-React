@@ -15,7 +15,7 @@ import Decimo from "./pages/Decimo";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
 
         <Route path="/" element={<LandingPage />}>
