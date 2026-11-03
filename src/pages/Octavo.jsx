@@ -4,13 +4,13 @@
 
 */
 
-import storeGalleta from "../context/storeGalleta"
+import storeVolumen from "../context/storeVolumen"
 
 
 
 const Octavo = () => {
 
-  const {detalle} = storeGalleta()
+  const { volumen, setVolumen } = storeVolumen()
 
   return (
     <>
@@ -21,9 +21,16 @@ const Octavo = () => {
 
         <div className="max-w-sm border-2 border-purple-500 rounded-lg p-4 w-80 text-center">
 
-          <p>nombre: {detalle.nombre}</p>
+          <p className="mb-3">Volumen actual: {volumen}%</p>
 
-          <p>tipo: {detalle.tipo}</p>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volumen}
+            onChange={(e) => setVolumen(Number(e.target.value))}
+            className="w-full"
+          />
 
         </div>
 

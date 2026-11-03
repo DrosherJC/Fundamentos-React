@@ -11,14 +11,15 @@ import { useState } from "react"
 
 const Noveno = () => {
 
-  const [login, setLogin] = useState(false)
-  const [habilidades] = useState([
-    { nombre: "HTML", icono: "📙" },
-    { nombre: "CSS", icono: "📘" },
-    { nombre: "JavaScript", icono: "📒" },
-    { nombre: "React", icono: "⚛️" },
-    { nombre: "Node.js", icono: "📗" },
+  const [productos] = useState([
+    { id: 1, nombre: "Laptop", precio: 7500, stock: 8 },
+    { id: 2, nombre: "Mouse", precio: 150, stock: 0 },
+    { id: 3, nombre: "Teclado", precio: 300, stock: 12 },
+    { id: 4, nombre: "Monitor", precio: 1800, stock: 0 },
+    { id: 5, nombre: "Audífonos", precio: 450, stock: 5 },
   ])
+
+  const [productoSeleccionado, setProductoSeleccionado] = useState(productos[0])
 
   return (
     <>
@@ -36,23 +37,30 @@ const Noveno = () => {
       </ul>
 
       <div className="flex justify-center mb-8 mt-8">
+
         <div className="border rounded-lg p-4 w-120 mx-auto text-center">
-          
+
           <h2 className="text-1xl font-bold text-left underline mb-4">Condicional</h2>
 
-          {login 
-            ? 
-          (
-            <p>¡Bienvenido de nuevo! 😎 </p>
-          ) 
-            : 
-          (
-           <p>Por favor, inicia sesión</p>
-          )}
+          <select
+            className="border rounded px-2 py-1 mb-4 w-full"
+            value={productoSeleccionado.id}
+            onChange={(e) => setProductoSeleccionado(productos.find((producto) => producto.id === Number(e.target.value)))}
+          >
+            {productos.map((producto) => (
+              <option key={producto.id} value={producto.id}>{producto.nombre}</option>
+            ))}
+          </select>
 
-          <button className="mt-2 bg-blue-600 text-white py-1 px-3 rounded" onClick={() => setLogin(!login)}>
-            {login ? "Cerrar sesión" : "Iniciar sesión"}
-          </button>
+          {productoSeleccionado.stock > 0
+            ?
+          (
+            <p className="text-green-700 font-semibold">Disponible ({productoSeleccionado.stock} en stock)</p>
+          )
+            :
+          (
+            <p className="text-red-700 font-semibold">Agotado</p>
+          )}
 
         </div>
 
@@ -60,20 +68,40 @@ const Noveno = () => {
 
       <div className="flex justify-center mb-8">
 
-        <div className=" border rounded-lg p-4 w-120 mx-auto text-center">
+        <div className=" border rounded-lg p-4 w-120 mx-auto">
 
           <h2 className="text-1xl font-bold text-left underline mb-4">Listas</h2>
-          
-            <ul className="list-disc pl-5 text-left">
-              
-              {habilidades.map((habilidad, index) => (
-      
-                <li key={index}>{habilidad.icono} - {habilidad.nombre}</li>
-      
-              ))}
-            
-            </ul>
-          
+
+          <ul className="divide-y">
+
+            {productos.map((producto) => (
+
+              <li key={producto.id} className="flex justify-between items-center py-2 text-left">
+
+                <div>
+
+                  <p className="font-semibold">{producto.nombre}</p>
+
+                  <p className="text-sm text-gray-600">Precio: ${producto.precio} - Stock: {producto.stock}</p>
+
+                </div>
+
+                {producto.stock > 0 ? (
+
+                  <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm">Disponible</span>
+
+                ) : (
+
+                  <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-sm">Agotado</span>
+
+                )}
+
+              </li>
+
+            ))}
+
+          </ul>
+
         </div>
 
       </div>

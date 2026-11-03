@@ -9,10 +9,10 @@ import Sexto from "./Sexto"
 
 const Quinto = () => {
 
-  const userProfile = {
-    name: "Matew",
-    rol: "Employee",
-    email: "matew@gmail.com",
+  const libro = {
+    titulo: "Cien años de soledad",
+    autor: "Gabriel García Márquez",
+    anio: 1967,
   }
 
   return (
@@ -31,7 +31,7 @@ const Quinto = () => {
       
       <div className="border-2 border-green-500 flex-colum justify-center items-center w-120 mx-auto mb-8">
     
-        <Sexto data={userProfile}/>
+        <Sexto titulo={libro.titulo} autor={libro.autor} anio={libro.anio}/>
         
       </div>
     

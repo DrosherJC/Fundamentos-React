@@ -1,25 +1,8 @@
-import { useState } from "react";
-import { useFetch } from "../customHook/useFecth";
+import { useConversion } from "../customHook/useConversion";
 
 const Cuarto = () => {
-  const [cliente, setCliente] = useState(null);
-  const [barbero, setBarbero] = useState(null);
-
-  const fetchDataBackend = useFetch();
-
-  const getProximoCliente = async () => {
-    const randomId = Math.floor(Math.random() * 10) + 1;
-    const data = await fetchDataBackend(`https://jsonplaceholder.typicode.com/users/${randomId}`);
-    setCliente(data);
-    console.log("Cliente cargado:", data);
-  };
-
-  const getBarberoDisponible = async () => {
-    const randomId = Math.floor(Math.random() * 10) + 1;
-    const data = await fetchDataBackend(`https://jsonplaceholder.typicode.com/users/${randomId}`);
-    setBarbero(data);
-    console.log("Barbero cargado:", data);
-  };
+  const { valor, setValor, tipo, setTipo, resultado, unidad, opciones } =
+    useConversion();
 
   return (
     <>
@@ -31,34 +14,40 @@ const Cuarto = () => {
         <li>
           Es un Hook que permite encapsular lógica reutilizable y que puede ser utilizado en cualquier componente.
         </li>
+        <li>
+          En este ejemplo, <strong>useConversion</strong> es un hook reutilizable para realizar conversiones de temperatura, distancia y peso.
+        </li>
       </ul>
 
       <div className="flex justify-center mb-8 mt-8">
         <div className="w-80 border rounded-lg p-4 text-center">
-          <h2 className="text-lg font-semibold mb-2 underline">Agenda del Día</h2>
+          <h2 className="text-lg font-semibold mb-2 underline">Conversor</h2>
 
           <div className="my-4 text-left text-sm bg-gray-50 p-3 rounded">
-            <p className="mb-2">
-              <strong>Próximo Cliente:</strong> {cliente?.name ?? "Sin consultar"}
-            </p>
-            <p>
-              <strong>Barbero Asignado:</strong> {barbero?.name ?? "Sin consultar"}
-            </p>
-          </div>
+            <label className="block mb-1 font-semibold">Tipo de conversión</label>
+            <select
+              className="w-full border rounded px-2 py-1 mb-3"
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value)}
+            >
+              {opciones.map((opcion) => (
+                <option key={opcion.id} value={opcion.id}>
+                  {opcion.etiqueta}
+                </option>
+              ))}
+            </select>
 
-          <div className="flex justify-center gap-2 mt-4">
-            <button
-              className="bg-indigo-600 text-white py-1 px-3 rounded text-sm hover:bg-indigo-700 transition-colors"
-              onClick={getProximoCliente}
-            >
-              Ver Cliente
-            </button>
-            <button
-              className="bg-emerald-600 text-white py-1 px-3 rounded text-sm hover:bg-emerald-700 transition-colors"
-              onClick={getBarberoDisponible}
-            >
-              Ver Barbero
-            </button>
+            <label className="block mb-1 font-semibold">Valor</label>
+            <input
+              type="number"
+              className="w-full border rounded px-2 py-1"
+              value={valor}
+              onChange={(e) => setValor(e.target.value)}
+            />
+
+            <p className="mt-3 text-center">
+              <strong>Resultado:</strong> {Number(resultado.toFixed(2))} {unidad}
+            </p>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
 */
 
 
-const Sexto = ({data}) => {
+const Sexto = ({titulo, autor, anio}) => {
 
 
   return (
@@ -17,11 +17,11 @@ const Sexto = ({data}) => {
         
         <div className="max-w-sm border-2 border-orange-500 rounded-lg p-4 w-80 text-center">
           
-          <h2 className="text-lg font-semibold mb-2">Bienvenido(a) - {data.name}</h2>
+          <h2 className="text-lg font-semibold mb-2">{titulo}</h2>
 
-          <p className="mb-3">rol: {data.rol}</p>
+          <p className="mb-3">Autor: {autor}</p>
           
-          <p className="mb-3">email: {data.email}</p>
+          <p className="mb-3">Año: {anio}</p>
         
         </div>
 

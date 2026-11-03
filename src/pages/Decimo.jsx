@@ -9,34 +9,27 @@ import { useEffect, useState } from "react"
 
 const Decimo = () => {
 
-  const [userToken, setUserToken] = useState({})
+  const [idioma, setIdioma] = useState(() => localStorage.getItem("idioma-preferido") || "es")
 
-  const user = {
-    name: "Byron",
-    rol: "Admin",
-    token:"1234***"
+  const textos = {
+    es: {
+      saludo: "Hola, bienvenido(a)",
+      descripcion: "Tu idioma preferido se guarda en el navegador.",
+    },
+    en: {
+      saludo: "Hello, welcome",
+      descripcion: "Your preferred language is saved in the browser.",
+    },
   }
-
-
-  const obtenerToken = ()=>{
-    const token = JSON.parse(localStorage.getItem("token-user"))
-    setUserToken(token)
-  }
-  
-  const limpiarToken = ()=>{
-    localStorage.removeItem("token-user")
-    setUserToken(null)
-  }
-  
-
 
   useEffect(() => {
-    localStorage.setItem("token-user", JSON.stringify(user))
-  }, [])
+    localStorage.setItem("idioma-preferido", idioma)
+  }, [idioma])
 
-  
-
-  
+  const limpiarIdioma = () => {
+    localStorage.removeItem("idioma-preferido")
+    setIdioma("es")
+  }
 
 return (
   <>
@@ -63,14 +56,25 @@ return (
 
       <div className="w-120 border rounded-lg p-4 w-80 text-center">
 
-        <h2 className="text-lg font-semibold mb-2">{userToken?.name}</h2>
+        <h2 className="text-lg font-semibold mb-2">{textos[idioma].saludo}</h2>
 
-        <p className="mb-3">{userToken?.rol}</p>
+        <p className="mb-3">{textos[idioma].descripcion}</p>
         
-        <p className="mb-3">{userToken?.token}</p>
+        <p className="mb-3">Idioma actual: {idioma === "es" ? "Español" : "English"}</p>
 
-        <button className="bg-green-700 text-white py-1 px-3 mx-1 rounded mt-4" onClick={obtenerToken}>Obtener Token</button>
-        <button className="bg-red-700 text-white py-1 px-3 rounded" onClick={limpiarToken}>Limpiar Token</button>
+        <button
+          className={`${idioma === "es" ? "bg-blue-700" : "bg-gray-500"} text-white py-1 px-3 mx-1 rounded`}
+          onClick={() => setIdioma("es")}
+        >
+          Español
+        </button>
+        <button
+          className={`${idioma === "en" ? "bg-blue-700" : "bg-gray-500"} text-white py-1 px-3 mx-1 rounded`}
+          onClick={() => setIdioma("en")}
+        >
+          English
+        </button>
+        <button className="bg-red-700 text-white py-1 px-3 rounded mt-4" onClick={limpiarIdioma}>Limpiar preferencia</button>
       </div>
 
     </div>
