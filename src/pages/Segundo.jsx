@@ -10,11 +10,11 @@ import { useState } from "react"
 
 const Segundo = () => {
 
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(5)
 
   const handleReset = () =>
   {
-    setCounter(0)
+    setCounter(5)
   }
 
   return (
@@ -31,13 +31,13 @@ const Segundo = () => {
         
         <div className="text-center mb-8">
         
-          <h2 className="mt-4 mb-4">Likes del vídeo: {counter}</h2>
+          <h2 className="mt-4 mb-4">Gestión de existencias de un producto en bodega: {counter}</h2>
         
-          <button className="bg-green-700 text-white py-1 px-3 mx-1 rounded" onClick={()=>setCounter(counter + 1)}>Aumentar</button>
+          <button className="bg-green-700 text-white py-1 px-3 mx-1 rounded" onClick={()=>setCounter(counter + 1)}>Reabastecer</button>
           
           <button className="bg-red-700 text-white py-1 px-3 mx-1 rounded" onClick={handleReset}>Resetar</button>
         
-          <button className="bg-blue-700 text-white py-1 px-3 rounded" onClick={()=>{setCounter(counter-1)}}>Disminuir</button>
+          <button className="bg-blue-700 text-white py-1 px-3 rounded" onClick={()=>{setCounter(counter-1)}}>Vender</button>
         
         </div>
     </>

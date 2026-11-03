@@ -12,8 +12,8 @@
 const Primero = () => {
 
   const user = {
-    name: "Byron",
-    rol: "Admin",
+    name: "José",
+    rol: "Invitado",
   }
 
   return (

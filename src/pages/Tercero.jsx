@@ -1,65 +1,71 @@
-
-/*
-
-  1- useEffect
-
-*/
-
-
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 const Tercero = () => {
+  const [orden, setOrden] = useState(null);
+  const [cargar, setCargar] = useState(false);
 
-  const [user, setUser] = useState({})
-  
-  const [buscar, setBuscar] = useState(1)
+  const getOrdenApi = async () => {
+    const id = Math.floor(Math.random() * 10) + 1;
+    const request = await fetch(`https://dummyjson.com/carts/${id}`);
+    const response = await request.json();
+    setOrden(response);
+  };
 
-  const getUserIDApi = async() =>
-  {
-    const id = Math.floor(Math.random()*10)+1
-    const request = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-    const response = await request.json()
-    console.log(response)
-    setUser(response)
-  }
-  
-  useEffect(()=>{
-    
-    getUserIDApi()
-  
-  },[buscar])
-
+  useEffect(() => {
+    getOrdenApi();
+  }, [cargar]);
 
   return (
     <>
       <h1 className="font-bold text-2xl">useEffect</h1>
 
-      <hr className="border-gray-400 mb-8"/>
+      <hr className="border-gray-400 mb-8" />
 
       <ul className="list-disc pl-5">
         <li>
-          Es un Hook que permite ejecutar efectos secundarios, como peticiones a APIs o actualizar el DOM.
+          Ejemplo de efecto secundario para consultar la información de un pedido en la base de datos mediante la API.
         </li>
       </ul>
 
-      <div className="flex justify-center mb-8 mt-8">
+      <div className="flex flex-col items-center mb-8 mt-8">
+        <button
+          onClick={() => setCargar(!cargar)}
+          className="mb-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+        >
+          Consultar Otra Orden
+        </button>
 
-        <div className="w-120 border rounded-lg p-4 w-80 text-center">
+        <div className="border border-black rounded-xl p-6 w-96 text-left shadow-sm">
+          {!orden ? (
+            <p className="text-center text-gray-500">Cargando datos de la orden...</p>
+          ) : (
+            <>
+              <h2 className="text-center font-bold text-lg mb-4">
+                Orden de Compra #{orden.id}
+              </h2>
 
-          <h2 className="text-lg font-semibold mb-2">Bienvenido(a) - {user.name}</h2>
-
-          <p className="mb-3 text-left">username: {user.username}</p>
-          <p className="mb-3 text-left">email: {user.email}</p>
-          <p className="mb-3 text-left">phone: {user.phone}</p>
-          <p className="mb-3 text-left">address: {user.address?.country}</p>
-          <p className="mb-3 text-left">location: {user.address?.geolo?.latitude ?? "N/A"}</p>
-          
+              <p className="mb-2">
+                <span className="font-semibold">ID Usuario:</span> {orden.userId}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Items Totales:</span> {orden.totalQuantity}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Subtotal:</span> ${orden.total}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Total con Descuento:</span> ${orden.discountedTotal}
+              </p>
+              <p className="mb-2">
+                <span className="font-semibold">Producto Principal:</span>{" "}
+                {orden.products?.[0]?.title ?? "N/A"}
+              </p>
+            </>
+          )}
         </div>
-
       </div>
-
     </>
-  )
-}
+  );
+};
 
-export default Tercero
+export default Tercero;

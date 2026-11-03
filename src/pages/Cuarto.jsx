@@ -1,39 +1,31 @@
-
-/*
-
-  1- customHook
-
-*/
-
-import { useState } from "react"
-import { useFetch } from "../customHook/useFecth"
+import { useState } from "react";
+import { useFetch } from "../customHook/useFecth";
 
 const Cuarto = () => {
-  
-  const [products, setProducts] = useState([])
-  const [memes, setMemes] = useState([])
-  
-  const fetchDataBackend = useFetch()
+  const [cliente, setCliente] = useState(null);
+  const [barbero, setBarbero] = useState(null);
 
-  const getDataProducts = async()=>{
-    const products = await fetchDataBackend("https://fakestoreapi.com/products")
-    setProducts(products)
-    console.log(products)  
-  }
-  
-  const getDataMemes = async()=>{
-    const memes = await fetchDataBackend("https://api.imgflip.com/get_memes")
-    setMemes(memes)
-    console.log(memes)  
-  }
+  const fetchDataBackend = useFetch();
 
+  const getProximoCliente = async () => {
+    const randomId = Math.floor(Math.random() * 10) + 1;
+    const data = await fetchDataBackend(`https://jsonplaceholder.typicode.com/users/${randomId}`);
+    setCliente(data);
+    console.log("Cliente cargado:", data);
+  };
 
-  
+  const getBarberoDisponible = async () => {
+    const randomId = Math.floor(Math.random() * 10) + 1;
+    const data = await fetchDataBackend(`https://jsonplaceholder.typicode.com/users/${randomId}`);
+    setBarbero(data);
+    console.log("Barbero cargado:", data);
+  };
+
   return (
     <>
       <h1 className="font-bold text-2xl">customHook</h1>
 
-      <hr className="border-gray-400 mb-8"/>
+      <hr className="border-gray-400 mb-8" />
 
       <ul className="list-disc pl-5">
         <li>
@@ -42,22 +34,36 @@ const Cuarto = () => {
       </ul>
 
       <div className="flex justify-center mb-8 mt-8">
+        <div className="w-80 border rounded-lg p-4 text-center">
+          <h2 className="text-lg font-semibold mb-2 underline">Agenda del Día</h2>
 
-        <div className="w-120 border rounded-lg p-4 w-80 text-center">
+          <div className="my-4 text-left text-sm bg-gray-50 p-3 rounded">
+            <p className="mb-2">
+              <strong>Próximo Cliente:</strong> {cliente?.name ?? "Sin consultar"}
+            </p>
+            <p>
+              <strong>Barbero Asignado:</strong> {barbero?.name ?? "Sin consultar"}
+            </p>
+          </div>
 
-          <h2 className="text-lg font-semibold mb-2 underline">Más información</h2>
-          <p className="mb-3 text-left mb-4"></p>
-          <pre>{JSON.stringify(products[3]?.title)}</pre>
-          <pre>{JSON.stringify(memes.data?.memes[0]?.name)}</pre>
-          
-          <button className="bg-violet-700 text-white py-1 px-3 mx-1 rounded mt-4" onClick={getDataProducts}>Obtener Productos</button>
-          <button className="bg-violet-700 text-white py-1 px-3 rounded" onClick={getDataMemes}>Obtener Memes</button>
+          <div className="flex justify-center gap-2 mt-4">
+            <button
+              className="bg-indigo-600 text-white py-1 px-3 rounded text-sm hover:bg-indigo-700 transition-colors"
+              onClick={getProximoCliente}
+            >
+              Ver Cliente
+            </button>
+            <button
+              className="bg-emerald-600 text-white py-1 px-3 rounded text-sm hover:bg-emerald-700 transition-colors"
+              onClick={getBarberoDisponible}
+            >
+              Ver Barbero
+            </button>
+          </div>
         </div>
-
       </div>
-
     </>
-  )
-}
+  );
+};
 
-export default Cuarto
+export default Cuarto;
